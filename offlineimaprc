@@ -1,0 +1,29 @@
+# Sample minimal config file.  Copy this to ~/.offlineimaprc and edit to
+# get started fast.
+
+[general]
+accounts = gmail
+#the location of the offlineimap.py
+pythonfile = /home/user/offlineimap.py
+
+[Account gmail]
+localrepository = Local
+remoterepository = Remote
+
+[Repository Local]
+type = Maildir
+localfolders = ~/Maildir
+
+[Repository Remote]
+type = Gmail
+#use your email
+remoteuser = your.email@gmail.com
+nametrans = lambda foldername: re.sub ('^\[gmail\]', 'bak',
+                               re.sub ('sent_mail', 'sent',
+                               re.sub ('starred', 'flagged',
+                               re.sub (' ', '_', foldername.lower()))))
+folderfilter = lambda foldername: foldername not in '[Gmail]/All Mail'
+# Set the DB path as well as the title and username of the specific entry you'd like to use.
+# This will prompt you on STDIN at runtime for the kdb master password.
+remotepasseval = get_keepass_pw("/path/to/database.kdb", title="<entry title>", username="<entry username>")
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
